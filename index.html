@@ -31,7 +31,6 @@ body{
     linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 60%, var(--bg-2) 100%);
 }
 
-/* HEADER */
 .header{
   position:sticky;top:0;z-index:50;
   backdrop-filter:blur(18px);
@@ -52,17 +51,33 @@ body{
 }
 .title{font-size:22px;font-weight:700;letter-spacing:.3px}
 .subtitle{font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
-.header-stats{display:flex;gap:14px;flex-wrap:wrap}
+.header-stats{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 .stat{
   background:rgba(255,255,255,.04);
   border:1px solid rgba(235,184,102,.2);
-  padding:10px 18px;border-radius:14px;min-width:120px;
+  padding:10px 18px;border-radius:14px;min-width:110px;
   box-shadow:inset 0 0 12px rgba(150,192,250,.08);
 }
 .stat-label{font-size:10px;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase}
 .stat-value{font-size:20px;font-weight:700;color:var(--gold);text-shadow:0 0 12px rgba(235,184,102,.4)}
 
-/* MAIN */
+.connection{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:1px;text-transform:uppercase;
+  padding:8px 14px;border-radius:999px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(235,184,102,.25);
+}
+.connection .dot{width:8px;height:8px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px var(--yellow);animation:pulse 1.4s infinite}
+.connection.ok .dot{background:var(--green);box-shadow:0 0 10px var(--green);animation:none}
+.connection.err .dot{background:var(--red);box-shadow:0 0 10px var(--red);animation:none}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.refresh{
+  cursor:pointer;background:rgba(235,184,102,.12);border:1px solid rgba(235,184,102,.4);
+  color:var(--gold);font-weight:600;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;
+  padding:8px 14px;border-radius:999px;transition:all .25s;
+}
+.refresh:hover{background:rgba(235,184,102,.22);box-shadow:0 0 16px rgba(235,184,102,.4)}
+
 .container{max-width:1400px;margin:0 auto;padding:32px}
 .section-title{
   font-size:13px;letter-spacing:2px;text-transform:uppercase;
@@ -70,13 +85,11 @@ body{
 }
 .section-title::before{content:"";width:24px;height:2px;background:var(--gold);box-shadow:0 0 12px var(--gold)}
 
-/* GRID */
 .grid{
   display:grid;gap:24px;
   grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
 }
 
-/* CARD */
 .card{
   position:relative;
   background:linear-gradient(155deg, rgba(255,255,255,.06), rgba(102,0,20,.18));
@@ -86,19 +99,15 @@ body{
   overflow:hidden;
   transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
   box-shadow:0 8px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
+  opacity:0;animation:fadeIn .5s forwards;
 }
-.card::before{
-  content:"";position:absolute;inset:-1px;border-radius:22px;pointer-events:none;
-  background:linear-gradient(135deg, rgba(235,184,102,.0), rgba(150,192,250,.0));
-  transition:background .35s;
-}
+@keyframes fadeIn{to{opacity:1}}
 .card:hover{
   transform:translateY(-6px);
   border-color:rgba(235,184,102,.55);
   box-shadow:0 14px 40px rgba(102,0,20,.55), 0 0 32px rgba(235,184,102,.18);
 }
 
-/* CARD HEAD */
 .card-head{display:flex;gap:14px;align-items:center;margin-bottom:18px}
 .avatar{
   width:64px;height:64px;border-radius:18px;flex-shrink:0;
@@ -120,7 +129,6 @@ body{
 }
 .meta-tag b{color:var(--primary);font-weight:600;margin-left:4px}
 
-/* BADGE */
 .badge{
   position:absolute;top:18px;right:18px;
   font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;
@@ -132,7 +140,6 @@ body{
 .badge.late{background:rgba(229,57,53,.12);color:var(--red);border:1px solid rgba(229,57,53,.45);box-shadow:0 0 14px rgba(229,57,53,.3)}
 .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
 
-/* PILARES */
 .pillars{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .pillar{
   background:rgba(0,0,0,.22);
@@ -146,10 +153,7 @@ body{
 .pillar-value{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1}
 .pillar-value small{font-size:11px;color:var(--muted);margin-left:3px;font-weight:500}
 
-/* PROGRESS BAR */
-.bar{
-  height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;position:relative;
-}
+.bar{height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;position:relative}
 .bar-fill{
   height:100%;border-radius:99px;
   background:linear-gradient(90deg, var(--primary), var(--gold));
@@ -160,7 +164,6 @@ body{
 .bar-fill.yellow{background:linear-gradient(90deg,#ffe18a,var(--yellow));box-shadow:0 0 10px rgba(255,201,74,.5)}
 .bar-fill.red{background:linear-gradient(90deg,#ff8a87,var(--red));box-shadow:0 0 10px rgba(229,57,53,.5)}
 
-/* CATEGORIA TAG */
 .cat-tag{
   display:inline-block;font-size:10px;letter-spacing:.8px;font-weight:600;
   padding:4px 10px;border-radius:8px;margin-top:4px;
@@ -170,25 +173,24 @@ body{
 .cat-legendario{background:rgba(102,0,20,.4);color:#ffb3c0;border:1px solid rgba(255,179,192,.5)}
 .cat-guardian{background:linear-gradient(135deg,rgba(235,184,102,.25),rgba(235,184,102,.1));color:var(--gold);border:1px solid rgba(235,184,102,.6);box-shadow:0 0 10px rgba(235,184,102,.3)}
 
-/* ALERT BOX */
 .alert-box{
   margin-top:6px;padding:10px 12px;border-radius:12px;
   font-size:11px;display:flex;align-items:center;gap:8px;
   background:rgba(0,0,0,.25);border:1px dashed rgba(235,184,102,.25);
   color:var(--muted);
 }
-.alert-box.active{
-  background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.45);
-  color:#ffb3b1;
-}
-.alert-box.ok{
-  background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.35);
-  color:#b8e6bb;
-}
+.alert-box.active{background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.45);color:#ffb3b1}
+.alert-box.ok{background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.35);color:#b8e6bb}
 .alert-box::before{content:"⚠";font-size:13px}
 .alert-box.ok::before{content:"✓"}
 
-/* RESPONSIVE */
+.notice{
+  display:none;background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.4);
+  color:#ffb3b1;padding:14px 18px;border-radius:14px;margin-bottom:24px;font-size:13px;
+}
+.notice.show{display:block}
+.notice b{color:var(--gold)}
+
 @media (max-width:1100px){.grid{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}}
 @media (max-width:760px){
   .container{padding:20px 16px}
@@ -198,10 +200,7 @@ body{
   .title{font-size:18px}
 }
 
-/* footer */
 .footer{text-align:center;color:var(--muted);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;margin:40px 0 24px}
-
-/* glow accent line */
 .glow-line{height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto;width:80%;max-width:600px;box-shadow:0 0 14px var(--gold);margin-bottom:32px;opacity:.55}
 </style>
 </head>
@@ -217,10 +216,12 @@ body{
       </div>
     </div>
     <div class="header-stats">
-      <div class="stat"><div class="stat-label">Participantes</div><div class="stat-value" id="kpi-total">10</div></div>
-      <div class="stat"><div class="stat-label">Avance promedio</div><div class="stat-value" id="kpi-avg">0%</div></div>
-      <div class="stat"><div class="stat-label">Cumplidos</div><div class="stat-value" id="kpi-cumplidos">0</div></div>
-      <div class="stat"><div class="stat-label">Alertas</div><div class="stat-value" id="kpi-alertas">0</div></div>
+      <div class="stat"><div class="stat-label">Participantes</div><div class="stat-value" id="kpi-total">—</div></div>
+      <div class="stat"><div class="stat-label">Avance promedio</div><div class="stat-value" id="kpi-avg">—</div></div>
+      <div class="stat"><div class="stat-label">Cumplidos</div><div class="stat-value" id="kpi-cumplidos">—</div></div>
+      <div class="stat"><div class="stat-label">Alertas</div><div class="stat-value" id="kpi-alertas">—</div></div>
+      <div class="connection" id="conn"><span class="dot"></span><span id="conn-text">Conectando…</span></div>
+      <button class="refresh" onclick="loadAndRender()">↻ Actualizar</button>
     </div>
   </div>
 </header>
@@ -228,52 +229,159 @@ body{
 <div class="glow-line"></div>
 
 <main class="container">
-  <div class="section-title">Vista general · 10 participantes</div>
+  <div id="notice" class="notice"></div>
+  <div class="section-title">Vista general · participantes</div>
   <div class="grid" id="grid"></div>
-  <div class="footer">© Programa de Liderazgo · Vista preview · Diseño listo para datos en vivo</div>
+  <div class="footer">© Programa de Liderazgo · Datos en vivo desde Google Sheets</div>
 </main>
 
 <script>
-/* === DATOS PLACEHOLDER === */
-/* Mapeo Google Sheets: hoja DASHBOARD_BASE → columnas A-N */
-/* foto=B, nombre=C, angel=D, contrato=E, salto=F, metas=G, enrol=H, legado=I, equipo=J, total=K, categoria=L, estado=M, alertas=N */
-const data = Array.from({length:10},(_,i)=>({
-  id:`P${String(i+1).padStart(2,"0")}`,
-  foto:"",
-  nombre:`Participante ${i+1}`,
-  angel:"—",
-  contrato:"—",
-  salto:"—",
-  metas:0, enrol:0, legado:0, equipo:0, total:0,
-  enrolCount:0,
-  categoria:"En progreso",
-  estado:"En riesgo",
-  alertas:""
-}));
+/* ============================================================
+   CONFIG · Google Sheets (CSV publicado)
+   - Para cambiar la hoja, vuelve a "Archivo → Compartir → Publicar en la web"
+     y selecciona la hoja DASHBOARD_BASE específicamente.
+   ============================================================ */
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSn6OXdmiwGXvvHXf8Q53LCssIqfyhVAs1yXUCGmKdPXXZM8ye8McaNz1VnO5rqmbEY2n8IoPtQXhke/pub?gid=84323714&single=true&output=csv";
 
-/* === CONEXIÓN FUTURA === */
-/* Reemplazar `data` con: const data = await fetchSheets("URL_GVIZ"); */
-/* Ejemplo: https://docs.google.com/spreadsheets/d/<ID>/gviz/tq?tqx=out:json&sheet=DASHBOARD_BASE */
+/* === Parser CSV robusto === */
+function parseCSV(text){
+  const rows=[]; let row=[],cell="",inQ=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(inQ){
+      if(c==='"'&&text[i+1]==='"'){cell+='"';i++;}
+      else if(c==='"'){inQ=false;}
+      else cell+=c;
+    } else {
+      if(c==='"') inQ=true;
+      else if(c===','){row.push(cell);cell="";}
+      else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell="";}
+      else if(c==='\r'){}
+      else cell+=c;
+    }
+  }
+  if(cell.length||row.length){row.push(cell);rows.push(row);}
+  return rows;
+}
 
+const toPct = v => {
+  if(v==null||v==="") return 0;
+  let s=v.toString().trim().replace(",",".");
+  if(s.endsWith("%")) return (parseFloat(s)||0)/100;
+  const n=parseFloat(s);
+  if(isNaN(n)) return 0;
+  return n>1 ? n/100 : n;
+};
+const clean = v => (v==null?"":v.toString().trim());
+
+/* === Fetch + parse === */
+async function fetchSheet(){
+  const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes("?")?"&":"?") + "_t=" + Date.now();
+  const r = await fetch(url,{cache:"no-store"});
+  if(!r.ok) throw new Error("HTTP "+r.status);
+  const txt = await r.text();
+  const rows = parseCSV(txt).filter(r=>r.length>1 || (r[0]&&r[0].trim()));
+  if(rows.length===0) throw new Error("Hoja vacía");
+
+  // localizar encabezados
+  let headerIdx = rows.findIndex(r =>
+    r.some(c=>/nombre/i.test(c||"")) &&
+    r.some(c=>/(metas|enrol|legado|equipo|total)/i.test(c||""))
+  );
+  if(headerIdx<0) headerIdx = rows.findIndex(r => r.some(c=>/nombre/i.test(c||"")));
+  if(headerIdx<0) throw new Error("No se encontraron columnas reconocidas. Publica la hoja DASHBOARD_BASE.");
+
+  const headers = rows[headerIdx].map(h=>(h||"").trim().toLowerCase());
+  const findCol = (...keys) => {
+    for(const k of keys){
+      const i = headers.findIndex(h => h.includes(k.toLowerCase()));
+      if(i>=0) return i;
+    } return -1;
+  };
+  const cols = {
+    id:        findCol("id"),
+    foto:      findCol("foto"),
+    nombre:    findCol("nombre"),
+    angel:     findCol("ángel","angel"),
+    contrato:  findCol("contrato"),
+    salto:     findCol("salto"),
+    metas:     findCol("metas"),
+    enrol:     findCol("enrol"),
+    legado:    findCol("legado"),
+    equipo:    findCol("equipo"),
+    total:     findCol("total"),
+    categoria: findCol("categor"),
+    estado:    findCol("estado"),
+    alertas:   findCol("alert"),
+  };
+
+  const data = [];
+  for(let i=headerIdx+1;i<rows.length;i++){
+    const r = rows[i];
+    const nombre = clean(r[cols.nombre]);
+    const id = clean(r[cols.id]);
+    if(!nombre && !id) continue;
+    if(/kpi|grupo|promedio|total enrolad|participantes/i.test(nombre)) continue;
+    data.push({
+      id, foto:clean(r[cols.foto]),
+      nombre: nombre || id || "(sin nombre)",
+      angel:    clean(r[cols.angel])    || "—",
+      contrato: clean(r[cols.contrato]) || "—",
+      salto:    clean(r[cols.salto])    || "—",
+      metas:  toPct(r[cols.metas]),
+      enrol:  toPct(r[cols.enrol]),
+      legado: toPct(r[cols.legado]),
+      equipo: toPct(r[cols.equipo]),
+      total:  toPct(r[cols.total]),
+      categoria: clean(r[cols.categoria]) || "En progreso",
+      estado:    clean(r[cols.estado])    || "En riesgo",
+      alertas:   clean(r[cols.alertas])   || "",
+    });
+  }
+  return data;
+}
+
+/* === Render === */
 const pct = v => Math.round((v||0)*100)+"%";
 const barClass = v => v>=0.8?"green":v>=0.4?"":v>=0.2?"yellow":"red";
-const catClass = c => ({"En progreso":"cat-progress","Cumplido":"cat-cumplido","Legendario":"cat-legendario","Guardián de la Luz":"cat-guardian"})[c]||"cat-progress";
+const catClass = c => {
+  const k=(c||"").toLowerCase();
+  if(k.includes("guard")) return "cat-guardian";
+  if(k.includes("legend")) return "cat-legendario";
+  if(k.includes("cumpl")) return "cat-cumplido";
+  return "cat-progress";
+};
+const enrolFromCat = (c,p) => {
+  const k=(c||"").toLowerCase();
+  if(k.includes("guard")) return "4+";
+  if(k.includes("legend")) return 3;
+  if(k.includes("cumpl")) return 2;
+  return Math.round((p||0)*2);
+};
 const estadoBadge = e => {
-  const s = (e||"").toLowerCase();
-  if(s.includes("cumplido")||s.includes("ok")) return {cls:"ok",txt:"OK"};
-  if(s.includes("atras")||s.includes("late")) return {cls:"late",txt:"Atrasado"};
-  return {cls:"risk",txt:"En riesgo"};
+  const s=(e||"").toLowerCase();
+  if(s.includes("cumpl")) return {cls:"ok",txt:"OK"};
+  if(s.includes("atras")) return {cls:"late",txt:"Atrasado"};
+  if(s.includes("aten") || s.includes("riesg")) return {cls:"risk",txt:"En riesgo"};
+  if(s.includes("progres")) return {cls:"risk",txt:"En progreso"};
+  return {cls:"risk",txt:e||"En riesgo"};
 };
 
-const grid = document.getElementById("grid");
-data.forEach(p=>{
-  const b = estadoBadge(p.estado);
-  const alertCls = p.alertas?(p.alertas.startsWith("✓")?"ok":"active"):"";
-  const alertTxt = p.alertas || "Sin alertas";
-  const photoStyle = p.foto ? `background-image:url('${p.foto}');` : "";
-  const placeholder = p.foto ? "" : "placeholder";
-  grid.insertAdjacentHTML("beforeend", `
-    <article class="card">
+function render(data){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  data.forEach((p,i)=>{
+    const b = estadoBadge(p.estado);
+    const isAlert = p.alertas && (p.alertas.startsWith("⚠") || /atras|falta|baja/i.test(p.alertas));
+    const isOk = p.alertas && p.alertas.startsWith("✓");
+    const alertCls = isAlert?"active":(isOk?"ok":"");
+    const alertTxt = p.alertas || "Sin alertas";
+    const photoStyle = p.foto ? `background-image:url('${p.foto}');` : "";
+    const placeholder = p.foto ? "" : "placeholder";
+    const card = document.createElement("article");
+    card.className = "card";
+    card.style.animationDelay = (i*30)+"ms";
+    card.innerHTML = `
       <span class="badge ${b.cls}">${b.txt}</span>
       <div class="card-head">
         <div class="avatar ${placeholder}" style="${photoStyle}"></div>
@@ -286,7 +394,6 @@ data.forEach(p=>{
           </div>
         </div>
       </div>
-
       <div class="pillars">
         <div class="pillar">
           <div class="pillar-label">Metas <span class="pillar-icon">◆</span></div>
@@ -295,7 +402,7 @@ data.forEach(p=>{
         </div>
         <div class="pillar">
           <div class="pillar-label">Enrolamiento <span class="pillar-icon">◆</span></div>
-          <div class="pillar-value">${p.enrolCount}<small>enrolados</small></div>
+          <div class="pillar-value">${enrolFromCat(p.categoria,p.enrol)}<small>enrolados</small></div>
           <span class="cat-tag ${catClass(p.categoria)}">${p.categoria}</span>
         </div>
         <div class="pillar">
@@ -309,18 +416,54 @@ data.forEach(p=>{
           <div class="bar"><div class="bar-fill ${barClass(p.equipo)}" style="width:${(p.equipo||0)*100}%"></div></div>
         </div>
       </div>
-
       <div class="alert-box ${alertCls}">${alertTxt}</div>
-    </article>
-  `);
-});
+    `;
+    grid.appendChild(card);
+  });
 
-/* KPIs */
-const avg = data.reduce((a,b)=>a+(b.total||0),0)/data.length;
-document.getElementById("kpi-total").textContent = data.length;
-document.getElementById("kpi-avg").textContent = pct(avg);
-document.getElementById("kpi-cumplidos").textContent = data.filter(d=>(d.estado||"").toLowerCase().includes("cumplido")).length;
-document.getElementById("kpi-alertas").textContent = data.filter(d=>(d.alertas||"").startsWith("⚠")).length;
+  const avg = data.length ? data.reduce((a,b)=>a+(b.total||0),0)/data.length : 0;
+  document.getElementById("kpi-total").textContent = data.length;
+  document.getElementById("kpi-avg").textContent = pct(avg);
+  document.getElementById("kpi-cumplidos").textContent = data.filter(d=>(d.estado||"").toLowerCase().includes("cumpl")).length;
+  document.getElementById("kpi-alertas").textContent = data.filter(d=>(d.alertas||"").startsWith("⚠")).length;
+}
+
+function setStatus(state, text){
+  const el = document.getElementById("conn");
+  el.classList.remove("ok","err");
+  if(state==="ok") el.classList.add("ok");
+  if(state==="err") el.classList.add("err");
+  document.getElementById("conn-text").textContent = text;
+}
+
+function showNotice(msg){
+  const n = document.getElementById("notice");
+  n.innerHTML = msg;
+  n.classList.add("show");
+}
+function hideNotice(){document.getElementById("notice").classList.remove("show");}
+
+async function loadAndRender(){
+  setStatus("loading","Conectando…");
+  hideNotice();
+  try{
+    const data = await fetchSheet();
+    if(!data.length){
+      setStatus("err","Sin datos");
+      showNotice("La hoja se conectó pero <b>no hay filas reconocibles</b>. Asegúrate de publicar la hoja <b>DASHBOARD_BASE</b>.");
+      render([]);
+      return;
+    }
+    setStatus("ok","Conectado");
+    render(data);
+  } catch(e){
+    setStatus("err","Sin conexión");
+    showNotice(`No se pudo cargar la hoja: <b>${e.message}</b>. Verifica que esté publicada (Archivo → Compartir → Publicar en la web → seleccionar hoja <b>DASHBOARD_BASE</b>).`);
+    render([]);
+  }
+}
+
+loadAndRender();
 </script>
 </body>
 </html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard de Participantes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#96c0fa;
+  --secondary:#660014;
+  --gold:#ebb866;
+  --bg-0:#0d0410;
+  --bg-1:#1a0a1f;
+  --bg-2:#240b2a;
+  --text:#f5f0f5;
+  --muted:#b9a8be;
+  --green:#4CAF50;
+  --yellow:#ffc94a;
+  --red:#e53935;
+  --card:rgba(255,255,255,0.04);
+  --card-border:rgba(235,184,102,0.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg-0);min-height:100vh;overflow-x:hidden}
+body{
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(150,192,250,.18), transparent 60%),
+    radial-gradient(900px 500px at 95% 0%, rgba(102,0,20,.55), transparent 65%),
+    radial-gradient(800px 600px at 50% 110%, rgba(235,184,102,.12), transparent 60%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 60%, var(--bg-2) 100%);
+}
+
+/* HEADER */
+.header{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(18px);
+  background:linear-gradient(90deg, rgba(102,0,20,.85), rgba(26,10,31,.75));
+  border-bottom:1px solid rgba(235,184,102,.25);
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.header-inner{
+  max-width:1400px;margin:0 auto;padding:22px 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{
+  width:48px;height:48px;border-radius:14px;
+  background:linear-gradient(135deg,var(--gold),#f7d99a);
+  display:grid;place-items:center;color:var(--secondary);font-weight:800;font-size:22px;
+  box-shadow:0 0 24px rgba(235,184,102,.45),inset 0 0 12px rgba(255,255,255,.3);
+}
+.title{font-size:22px;font-weight:700;letter-spacing:.3px}
+.subtitle{font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+.header-stats{display:flex;gap:14px;flex-wrap:wrap}
+.stat{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(235,184,102,.2);
+  padding:10px 18px;border-radius:14px;min-width:120px;
+  box-shadow:inset 0 0 12px rgba(150,192,250,.08);
+}
+.stat-label{font-size:10px;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase}
+.stat-value{font-size:20px;font-weight:700;color:var(--gold);text-shadow:0 0 12px rgba(235,184,102,.4)}
+
+/* MAIN */
+.container{max-width:1400px;margin:0 auto;padding:32px}
+.section-title{
+  font-size:13px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:10px;
+}
+.section-title::before{content:"";width:24px;height:2px;background:var(--gold);box-shadow:0 0 12px var(--gold)}
+
+/* GRID */
+.grid{
+  display:grid;gap:24px;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+}
+
+/* CARD */
+.card{
+  position:relative;
+  background:linear-gradient(155deg, rgba(255,255,255,.06), rgba(102,0,20,.18));
+  border:1px solid var(--card-border);
+  border-radius:22px;
+  padding:22px;
+  overflow:hidden;
+  transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  box-shadow:0 8px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.card::before{
+  content:"";position:absolute;inset:-1px;border-radius:22px;pointer-events:none;
+  background:linear-gradient(135deg, rgba(235,184,102,.0), rgba(150,192,250,.0));
+  transition:background .35s;
+}
+.card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(235,184,102,.55);
+  box-shadow:0 14px 40px rgba(102,0,20,.55), 0 0 32px rgba(235,184,102,.18);
+}
+
+/* CARD HEAD */
+.card-head{display:flex;gap:14px;align-items:center;margin-bottom:18px}
+.avatar{
+  width:64px;height:64px;border-radius:18px;flex-shrink:0;
+  background:linear-gradient(135deg, rgba(150,192,250,.4), rgba(102,0,20,.6));
+  border:1.5px solid rgba(235,184,102,.4);
+  display:grid;place-items:center;
+  color:var(--gold);font-size:24px;font-weight:700;
+  box-shadow:0 0 20px rgba(150,192,250,.25), inset 0 0 14px rgba(0,0,0,.3);
+  background-size:cover;background-position:center;
+}
+.avatar.placeholder::after{content:"👤";font-size:26px}
+.head-info{flex:1;min-width:0}
+.name{font-size:17px;font-weight:700;color:#fff;letter-spacing:.2px;line-height:1.2;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta-row{display:flex;flex-wrap:wrap;gap:6px}
+.meta-tag{
+  font-size:10px;letter-spacing:.5px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(235,184,102,.18);
+  padding:3px 8px;border-radius:8px;color:var(--muted);
+}
+.meta-tag b{color:var(--primary);font-weight:600;margin-left:4px}
+
+/* BADGE */
+.badge{
+  position:absolute;top:18px;right:18px;
+  font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;
+  padding:6px 12px;border-radius:999px;
+  display:flex;align-items:center;gap:6px;
+}
+.badge.ok{background:rgba(76,175,80,.15);color:var(--green);border:1px solid rgba(76,175,80,.4);box-shadow:0 0 14px rgba(76,175,80,.25)}
+.badge.risk{background:rgba(255,201,74,.12);color:var(--yellow);border:1px solid rgba(255,201,74,.45);box-shadow:0 0 14px rgba(255,201,74,.25)}
+.badge.late{background:rgba(229,57,53,.12);color:var(--red);border:1px solid rgba(229,57,53,.45);box-shadow:0 0 14px rgba(229,57,53,.3)}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+
+/* PILARES */
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pillar{
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:14px;padding:12px;
+  transition:border-color .25s;
+}
+.pillar:hover{border-color:rgba(235,184,102,.35)}
+.pillar-label{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.pillar-icon{font-size:11px;color:var(--gold)}
+.pillar-value{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1}
+.pillar-value small{font-size:11px;color:var(--muted);margin-left:3px;font-weight:500}
+
+/* PROGRESS BAR */
+.bar{
+  height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;position:relative;
+}
+.bar-fill{
+  height:100%;border-radius:99px;
+  background:linear-gradient(90deg, var(--primary), var(--gold));
+  box-shadow:0 0 10px rgba(235,184,102,.5);
+  transition:width .8s cubic-bezier(.2,.8,.2,1);
+}
+.bar-fill.green{background:linear-gradient(90deg,#7be084,var(--green));box-shadow:0 0 10px rgba(76,175,80,.5)}
+.bar-fill.yellow{background:linear-gradient(90deg,#ffe18a,var(--yellow));box-shadow:0 0 10px rgba(255,201,74,.5)}
+.bar-fill.red{background:linear-gradient(90deg,#ff8a87,var(--red));box-shadow:0 0 10px rgba(229,57,53,.5)}
+
+/* CATEGORIA TAG */
+.cat-tag{
+  display:inline-block;font-size:10px;letter-spacing:.8px;font-weight:600;
+  padding:4px 10px;border-radius:8px;margin-top:4px;
+}
+.cat-progress{background:rgba(150,192,250,.15);color:var(--primary);border:1px solid rgba(150,192,250,.4)}
+.cat-cumplido{background:rgba(76,175,80,.15);color:var(--green);border:1px solid rgba(76,175,80,.4)}
+.cat-legendario{background:rgba(102,0,20,.4);color:#ffb3c0;border:1px solid rgba(255,179,192,.5)}
+.cat-guardian{background:linear-gradient(135deg,rgba(235,184,102,.25),rgba(235,184,102,.1));color:var(--gold);border:1px solid rgba(235,184,102,.6);box-shadow:0 0 10px rgba(235,184,102,.3)}
+
+/* ALERT BOX */
+.alert-box{
+  margin-top:6px;padding:10px 12px;border-radius:12px;
+  font-size:11px;display:flex;align-items:center;gap:8px;
+  background:rgba(0,0,0,.25);border:1px dashed rgba(235,184,102,.25);
+  color:var(--muted);
+}
+.alert-box.active{
+  background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.45);
+  color:#ffb3b1;
+}
+.alert-box.ok{
+  background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.35);
+  color:#b8e6bb;
+}
+.alert-box::before{content:"⚠";font-size:13px}
+.alert-box.ok::before{content:"✓"}
+
+/* RESPONSIVE */
+@media (max-width:1100px){.grid{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}}
+@media (max-width:760px){
+  .container{padding:20px 16px}
+  .header-inner{padding:16px 20px}
+  .pillars{grid-template-columns:1fr 1fr}
+  .grid{grid-template-columns:1fr;gap:18px}
+  .title{font-size:18px}
+}
+
+/* footer */
+.footer{text-align:center;color:var(--muted);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;margin:40px 0 24px}
+
+/* glow accent line */
+.glow-line{height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto;width:80%;max-width:600px;box-shadow:0 0 14px var(--gold);margin-bottom:32px;opacity:.55}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">★</div>
+      <div>
+        <div class="title">Dashboard de Participantes</div>
+        <div class="subtitle">Programa de Desarrollo y Liderazgo</div>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div class="stat"><div class="stat-label">Participantes</div><div class="stat-value" id="kpi-total">10</div></div>
+      <div class="stat"><div class="stat-label">Avance promedio</div><div class="stat-value" id="kpi-avg">0%</div></div>
+      <div class="stat"><div class="stat-label">Cumplidos</div><div class="stat-value" id="kpi-cumplidos">0</div></div>
+      <div class="stat"><div class="stat-label">Alertas</div><div class="stat-value" id="kpi-alertas">0</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="glow-line"></div>
+
+<main class="container">
+  <div class="section-title">Vista general · 10 participantes</div>
+  <div class="grid" id="grid"></div>
+  <div class="footer">© Programa de Liderazgo · Vista preview · Diseño listo para datos en vivo</div>
+</main>
+
+<script>
+/* === DATOS PLACEHOLDER === */
+/* Mapeo Google Sheets: hoja DASHBOARD_BASE → columnas A-N */
+/* foto=B, nombre=C, angel=D, contrato=E, salto=F, metas=G, enrol=H, legado=I, equipo=J, total=K, categoria=L, estado=M, alertas=N */
+const data = Array.from({length:10},(_,i)=>({
+  id:`P${String(i+1).padStart(2,"0")}`,
+  foto:"",
+  nombre:`Participante ${i+1}`,
+  angel:"—",
+  contrato:"—",
+  salto:"—",
+  metas:0, enrol:0, legado:0, equipo:0, total:0,
+  enrolCount:0,
+  categoria:"En progreso",
+  estado:"En riesgo",
+  alertas:""
+}));
+
+/* === CONEXIÓN FUTURA === */
+/* Reemplazar `data` con: const data = await fetchSheets("URL_GVIZ"); */
+/* Ejemplo: https://docs.google.com/spreadsheets/d/<ID>/gviz/tq?tqx=out:json&sheet=DASHBOARD_BASE */
+
+const pct = v => Math.round((v||0)*100)+"%";
+const barClass = v => v>=0.8?"green":v>=0.4?"":v>=0.2?"yellow":"red";
+const catClass = c => ({"En progreso":"cat-progress","Cumplido":"cat-cumplido","Legendario":"cat-legendario","Guardián de la Luz":"cat-guardian"})[c]||"cat-progress";
+const estadoBadge = e => {
+  const s = (e||"").toLowerCase();
+  if(s.includes("cumplido")||s.includes("ok")) return {cls:"ok",txt:"OK"};
+  if(s.includes("atras")||s.includes("late")) return {cls:"late",txt:"Atrasado"};
+  return {cls:"risk",txt:"En riesgo"};
+};
+
+const grid = document.getElementById("grid");
+data.forEach(p=>{
+  const b = estadoBadge(p.estado);
+  const alertCls = p.alertas?(p.alertas.startsWith("✓")?"ok":"active"):"";
+  const alertTxt = p.alertas || "Sin alertas";
+  const photoStyle = p.foto ? `background-image:url('${p.foto}');` : "";
+  const placeholder = p.foto ? "" : "placeholder";
+  grid.insertAdjacentHTML("beforeend", `
+    <article class="card">
+      <span class="badge ${b.cls}">${b.txt}</span>
+      <div class="card-head">
+        <div class="avatar ${placeholder}" style="${photoStyle}"></div>
+        <div class="head-info">
+          <div class="name">${p.nombre}</div>
+          <div class="meta-row">
+            <span class="meta-tag">Ángel<b>${p.angel}</b></span>
+            <span class="meta-tag">Contrato<b>${p.contrato}</b></span>
+            <span class="meta-tag">Salto<b>${p.salto}</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-label">Metas <span class="pillar-icon">◆</span></div>
+          <div class="pillar-value">${pct(p.metas)}</div>
+          <div class="bar"><div class="bar-fill ${barClass(p.metas)}" style="width:${(p.metas||0)*100}%"></div></div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-label">Enrolamiento <span class="pillar-icon">◆</span></div>
+          <div class="pillar-value">${p.enrolCount}<small>enrolados</small></div>
+          <span class="cat-tag ${catClass(p.categoria)}">${p.categoria}</span>
+        </div>
+        <div class="pillar">
+          <div class="pillar-label">Legado <span class="pillar-icon">◆</span></div>
+          <div class="pillar-value">${pct(p.legado)}</div>
+          <div class="bar"><div class="bar-fill ${barClass(p.legado)}" style="width:${(p.legado||0)*100}%"></div></div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-label">Equipo <span class="pillar-icon">◆</span></div>
+          <div class="pillar-value">${pct(p.equipo)}</div>
+          <div class="bar"><div class="bar-fill ${barClass(p.equipo)}" style="width:${(p.equipo||0)*100}%"></div></div>
+        </div>
+      </div>
+
+      <div class="alert-box ${alertCls}">${alertTxt}</div>
+    </article>
+  `);
+});
+
+/* KPIs */
+const avg = data.reduce((a,b)=>a+(b.total||0),0)/data.length;
+document.getElementById("kpi-total").textContent = data.length;
+document.getElementById("kpi-avg").textContent = pct(avg);
+document.getElementById("kpi-cumplidos").textContent = data.filter(d=>(d.estado||"").toLowerCase().includes("cumplido")).length;
+document.getElementById("kpi-alertas").textContent = data.filter(d=>(d.alertas||"").startsWith("⚠")).length;
+</script>
+</body>
+</html>
